@@ -18,7 +18,7 @@ async function getWebAudioMediaStream() {
     switch (e.name) {
       case "NotAllowedError":
         throw new Error(
-          "A recording device was found but has been disallowed for this application. Enable the device in the browser settings."
+          "A recording device was found but has been disallowed for this application. Enable the device in the browser's settings."
         );
 
       case "NotFoundError":
@@ -33,7 +33,7 @@ async function getWebAudioMediaStream() {
 }
 
 export async function setupAudio(onPitchDetectedCallback) {
-  // Get the browser audio. Awaits user "allowing" it for the current tab.
+  // Get the browser's audio. Awaits user "allowing" it for the current tab.
   const mediaStream = await getWebAudioMediaStream();
 
   const context = new window.AudioContext();
@@ -56,7 +56,7 @@ export async function setupAudio(onPitchDetectedCallback) {
       );
     }
 
-    // Create the AudioWorkletNode which enables the main JavaScript thread to
+    // Create the AudioWorkletNode which enables the main Javascript thread to
     // communicate with the audio processor (which runs in a Worklet).
     node = new PitchNode(context, "PitchProcessor");
 

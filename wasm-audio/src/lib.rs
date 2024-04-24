@@ -14,6 +14,10 @@ impl WasmPitchDetector {
   pub fn new(sample_rate: usize, fft_size: usize) -> WasmPitchDetector {
     utils::set_panic_hook();
 
+    // Define the amount of zero-padding applied to each analysis FFT. Padding,
+    // in combination with the windowing function used by the algorithm helps
+    // "smooth" the results as the analysis moves across the incoming sampled audio
+    // data. Using a pad of half the fft length works well for many instruments.
     let fft_pad = fft_size / 2;
 
     WasmPitchDetector {
@@ -29,8 +33,8 @@ impl WasmPitchDetector {
     }
 
     // Include only notes that exceed a power threshold which relates to the
-    // amplitude of frequencies in the signal. Use the suggested default
-    // value of 5.0 from the library.
+    // amplitude of frequencies in the signal. Use the library's suggested
+    // default value of 5.0.
     const POWER_THRESHOLD: f32 = 5.0;
 
     // The clarity measure describes how coherent the sound of a note is. For
